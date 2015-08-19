@@ -1,2 +1,3 @@
 # pomodoro-timer
-A timer designed to be both fancy and functional. 
+
+A timer designed to be both fancy and functional. It will cure what ails you and bring harmony to the planets.
