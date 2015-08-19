@@ -13,7 +13,7 @@
       <div class= "container-fluid">
 
         <div class="row">
-          <div class="col-xs-10 col-md-4 col-xs-offset-1 col-md-offset-4">
+          <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
 
             <svg id="clock" viewBox="0 0 100 100">
               <circle id="face" cx="50" cy="50" r="45"/>
@@ -22,18 +22,21 @@
                 <rect id="min" x="48.5" y="12" width="3" height="40" rx="2" ry="2"/>
                 <line id="sec" x1="50" y1="52" x2="50" y2="10" />
               </g>
-              <path id="arc1" fill="none" stroke="#446688"/>
+              <path id="arc1" />
             </svg>
 
           </div>
         </div>
 
         <div class="row row-centered">
-          <!-- <div class="col-xs-10 col-xs-offset-1"> -->
+          <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
+            <div class="col-xs-2">
+              <i id="pomMinus" class="fa fa-minus hvr-bounce-in"></i><p id="pomLength">25</p><i id="pomPlus" class="fa fa-plus hvr-bounce-in"></i>
+            </div>
             <div class="col-xs-1 col-centered">
               <i id="runPom" class="fa fa-play fa-4x hvr-bounce-in"></i>
             </div>
-          <!-- </div> -->
+          </div>
         </div>
 
         <!-- javascript here -->

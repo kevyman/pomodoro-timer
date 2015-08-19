@@ -1,5 +1,5 @@
 body{
-  background-color: blue;
+
 }
 
 #face{
@@ -15,6 +15,8 @@ body{
 
 #arc1{
   stroke-width: 5px;
+  fill: none;
+  stroke: #446688;
 }
 
 #sec{
