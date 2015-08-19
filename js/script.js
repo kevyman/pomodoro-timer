@@ -1,6 +1,8 @@
 $(document).ready(function(){
   var curTime;
   var endPom;
+  var pomLength = 25;
+  var breakLength = 5;
   var pomRunning = false;
   var breakRunning = false;
 
@@ -49,8 +51,7 @@ function describeArc(x, y, radius, startAngle, endAngle){
   $("#runPom").click(function(){
     if($(this).hasClass("fa-play")){
       curTime = new Date();
-      console.log(curTime);
-      endPom = 6*curTime.getMinutes() + curTime.getSeconds()/10 + 6;
+      endPom = 6*curTime.getMinutes() + curTime.getSeconds()/10 + 6*pomLength;
       pomRunning = true;
     }
     else{
@@ -58,8 +59,32 @@ function describeArc(x, y, radius, startAngle, endAngle){
       document.getElementById("arc1").setAttribute("d", describeArc(0, 0, 0, 0, 0));
     }
     $(this).toggleClass("fa-play").toggleClass("fa-stop");
+  });
 
+  $("#pomPlus").click(function(){
+    if(pomLength>=1 && pomLength < 59){
+      pomLength++;
+      $("#pomLen").html(pomLength);
+      if(pomLength+breakLength>60){
+        breakLength--;
+        $("#breakLen").html(breakLength);
+      }
+    }
 
+  });
+  $("#pomMinus").click(function(){
+    if(pomLength>1 && pomLength <= 59){
+      pomLength--;
+      $("#pomLen").html(pomLength);
+    }
+  });
+  $("#breakPlus").click(function(){
+    breakLength++;
+    $("#breakLen").html(breakLength);
+  });
+  $("#breakMinus").click(function(){
+    breakLength--;
+    $("#breakLen").html(breakLength);
   });
 
 
