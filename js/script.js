@@ -1,6 +1,7 @@
 $(document).ready(function(){
   var curTime;
   var endPom;
+  var endBreak;
   var pomLength = 25;
   var breakLength = 5;
   var pomRunning = false;
@@ -15,12 +16,27 @@ $(document).ready(function(){
     r(sec, 6*d.getSeconds());
     r(min, 6*d.getMinutes() + d.getSeconds()/10);
     r(hour, 30*(d.getHours()%12) + d.getMinutes()/2);
-    if(6*d.getMinutes() + d.getSeconds()/10 === endPom){
-      pomRunning = false;
-    }
+
+
     if(pomRunning){
-      document.getElementById("arc1")
+      document.getElementById("pomArc")
       .setAttribute("d", describeArc(50, 50, 43.1, 6*d.getMinutes() + d.getSeconds()/10, endPom));
+      document.getElementById("breakArc")
+      .setAttribute("d", describeArc(50, 50, 43.1, endPom, endBreak));
+    }
+
+    if(6*d.getMinutes() + d.getSeconds()/10 === endPom && pomRunning){
+      pomRunning = false;
+      breakRunning = true;
+    }
+
+    if(breakRunning){
+      document.getElementById("breakArc")
+      .setAttribute("d", describeArc(50, 50, 43.1, 6*d.getMinutes() + d.getSeconds()/10, endBreak));
+    }
+
+    if(6*d.getMinutes() + d.getSeconds()/10 === endBreak && breakRunning){
+      breakRunning = false;
     }
   }, 1000)
 
@@ -52,11 +68,14 @@ function describeArc(x, y, radius, startAngle, endAngle){
     if($(this).hasClass("fa-play")){
       curTime = new Date();
       endPom = 6*curTime.getMinutes() + curTime.getSeconds()/10 + 6*pomLength;
+      endBreak = endPom + 6 * breakLength;
       pomRunning = true;
     }
     else{
       pomRunning = false;
-      document.getElementById("arc1").setAttribute("d", describeArc(0, 0, 0, 0, 0));
+      breakRunning = false;
+      document.getElementById("pomArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
+      document.getElementById("breakArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
     }
     $(this).toggleClass("fa-play").toggleClass("fa-stop");
   });
@@ -79,12 +98,21 @@ function describeArc(x, y, radius, startAngle, endAngle){
     }
   });
   $("#breakPlus").click(function(){
-    breakLength++;
-    $("#breakLen").html(breakLength);
+    if(breakLength>=1 && breakLength < 59){
+      breakLength++;
+      $("#breakLen").html(breakLength);
+      if(pomLength+breakLength>60){
+        pomLength--;
+        $("#pomLen").html(pomLength);
+      }
+    }
   });
+
   $("#breakMinus").click(function(){
-    breakLength--;
-    $("#breakLen").html(breakLength);
+    if(breakLength>1 && breakLength <= 59){
+      breakLength--;
+      $("#breakLen").html(breakLength);
+    }
   });
 
 

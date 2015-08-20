@@ -13,10 +13,17 @@ body{
   stroke: #555;
 }
 
-#arc1{
+#pomArc, #breakArc{
   stroke-width: 5px;
   fill: none;
+}
+
+#pomArc{
   stroke: #446688;
+}
+
+#breakArc{
+  stroke: green;
 }
 
 #sec{
