@@ -2,6 +2,7 @@ $(document).ready(function(){
   var curTime;
   var endPom;
   var endBreak;
+  var totalPoms= 0;
   var pomLength = 25;
   var breakLength = 5;
   var pomRunning = false;
@@ -26,9 +27,26 @@ $(document).ready(function(){
     }
 
     if(6*d.getMinutes() + d.getSeconds()/10 === endPom && pomRunning){
+
       pomRunning = false;
-      breakRunning = true;
       document.getElementById("bell").play();
+
+      totalPoms++;
+
+      document.getElementById("breakArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
+
+      swal({
+        title: "Good job!",
+        text: "You have completed <b>" + totalPoms + " pomodoros</b> of work! Are you ready for a relaxing <b>" + breakLength + " minutes</b> of whatever the heck you feel like?",
+        type: "success",
+        html: true,
+        confirmButtonText: "Yes, I can't wait!"
+      },
+      function(){
+        breakRunning = true;
+        var popTime = new Date();
+        endBreak = 6*popTime.getMinutes() + popTime.getSeconds()/10 + 6*breakLength;
+      });
     }
 
     if(breakRunning){
@@ -37,11 +55,23 @@ $(document).ready(function(){
     }
 
     if(6*d.getMinutes() + d.getSeconds()/10 === endBreak && breakRunning){
+
       breakRunning = false;
-      endPom = 6*d.getMinutes() + d.getSeconds()/10 + 6*pomLength;
-      endBreak = endPom + 6 * breakLength;
       document.getElementById("bell").play();
-      pomRunning = true;
+
+      swal({
+        title: "Good job!",
+        text: "You have completed <b>" + totalPoms + " pomodoros</b> of work! Are you ready for a relaxing <b>" + breakLength + " minutes</b> of whatever the heck you feel like?",
+        type: "success",
+        html: true,
+        confirmButtonText: "Yes, I can't wait!"
+      },
+      function(){
+        pomRunning = true;
+        var popTime = new Date();
+        endPom = 6*popTime.getMinutes() + popTime.getSeconds()/10 + 6*pomLength;
+        endBreak = endPom + 6 * breakLength;
+      });
     }
   }, 1000)
 
