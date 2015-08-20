@@ -28,6 +28,7 @@ $(document).ready(function(){
     if(6*d.getMinutes() + d.getSeconds()/10 === endPom && pomRunning){
       pomRunning = false;
       breakRunning = true;
+      document.getElementById("bell").play();
     }
 
     if(breakRunning){
@@ -37,6 +38,10 @@ $(document).ready(function(){
 
     if(6*d.getMinutes() + d.getSeconds()/10 === endBreak && breakRunning){
       breakRunning = false;
+      endPom = 6*d.getMinutes() + d.getSeconds()/10 + 6*pomLength;
+      endBreak = endPom + 6 * breakLength;
+      document.getElementById("bell").play();
+      pomRunning = true;
     }
   }, 1000)
 
