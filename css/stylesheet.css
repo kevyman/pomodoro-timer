@@ -68,7 +68,22 @@ body{
   transition-timing-function: cubic-bezier(0.47, 2.02, 0.31, -0.36);
 }
 
+label{
+  width: 100vw;
+}
+#pomNumSlider{
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 78%;
+  position: relative;
+  display: inline-block;
+}
 
-#runPom{
+#input{
+  /*text-align: center;*/
+}
 
+#pomQuantity{
+  display: inline-block;
+  width: 17%;
 }

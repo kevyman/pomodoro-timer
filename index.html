@@ -50,6 +50,39 @@
           </div>
         </div>
 
+        <div id="startModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Let's get to work!</h4>
+              </div>
+              <div class="modal-body">
+
+                <form id="input" autocomplete="off">
+                  <div class="form-group">
+
+                    <label for="pomQuantity" class="control-label">What is your goal for number of pomodoros?</label>
+                    <input type="number" class="form-control" id="pomQuantity" min="1" max="10" value=1>
+                    <input style="display:inline;" type=range min=1 max=10 value=1 id=pomNumSlider step=1>
+
+
+
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Let's do this!</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
         <audio id="bell" preload="auto">
           <source  src="http://www.myinstants.com/media/sounds/boxing-bell.mp3" type="audio/mp3" />
         </audio>

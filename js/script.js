@@ -60,11 +60,10 @@ $(document).ready(function(){
       document.getElementById("bell").play();
 
       swal({
-        title: "Good job!",
-        text: "You have completed <b>" + totalPoms + " pomodoros</b> of work! Are you ready for a relaxing <b>" + breakLength + " minutes</b> of whatever the heck you feel like?",
-        type: "success",
+        title: "Back to work!",
+        text: "Hope that break left you feeling refreshed! Now it's time to get back to accomplishing your goals. Ready for<b> " + pomLength + " more minutes</b> of work?",
         html: true,
-        confirmButtonText: "Yes, I can't wait!"
+        confirmButtonText: "Let me at it!"
       },
       function(){
         pomRunning = true;
@@ -76,35 +75,50 @@ $(document).ready(function(){
   }, 1000)
 
   function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
-  var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
+    var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
 
-  return {
-    x: centerX + (radius * Math.cos(angleInRadians)),
-    y: centerY + (radius * Math.sin(angleInRadians))
-  };
-}
+    return {
+      x: centerX + (radius * Math.cos(angleInRadians)),
+      y: centerY + (radius * Math.sin(angleInRadians))
+    };
+  }
 
-function describeArc(x, y, radius, startAngle, endAngle){
+  function describeArc(x, y, radius, startAngle, endAngle){
 
-    var start = polarToCartesian(x, y, radius, endAngle);
-    var end = polarToCartesian(x, y, radius, startAngle);
+      var start = polarToCartesian(x, y, radius, endAngle);
+      var end = polarToCartesian(x, y, radius, startAngle);
 
-    var arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
+      var arcSweep = endAngle - startAngle <= 180 ? "0" : "1";
 
-    var d = [
-        "M", start.x, start.y,
-        "A", radius, radius, 0, arcSweep, 0, end.x, end.y
-    ].join(" ");
+      var d = [
+          "M", start.x, start.y,
+          "A", radius, radius, 0, arcSweep, 0, end.x, end.y
+      ].join(" ");
 
-    return d;
-}
+      return d;
+  }
+
+  $("#clock").click(function(){
+    $('#startModal').modal();
+  });
+
+  $('#pomNumSlider').on('input', function(){
+    $('#pomQuantity').val($('#pomNumSlider').val());
+});
+
+$('#pomQuantity').on('input', function(){
+  $('#pomNumSlider').val($('#pomQuantity').val());
+});
+
 
   $("#runPom").click(function(){
     if($(this).hasClass("fa-play")){
+
       curTime = new Date();
       endPom = 6*curTime.getMinutes() + curTime.getSeconds()/10 + 6*pomLength;
       endBreak = endPom + 6 * breakLength;
       pomRunning = true;
+
     }
     else{
       pomRunning = false;
@@ -149,6 +163,8 @@ function describeArc(x, y, radius, startAngle, endAngle){
       $("#breakLen").html(breakLength);
     }
   });
+
+
 
 
 });
