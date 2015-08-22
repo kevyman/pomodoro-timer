@@ -122,6 +122,29 @@ $(document).ready(function(){
     updateTimeParagraph();
   });
 
+  $("#settingsBtn").click(function(){
+    $("#settings").toggle();
+  });
+
+  $('#workLength').on('input', function(){
+    $('#workSlider').val($('#workLength').val());
+    pomLength = $('#workLength').val();
+    console.log(pomLength);
+    updateTimeParagraph();
+  });
+
+  $('#workSlider').on('input', function(){
+    $('#workLength').val($('#workSlider').val());
+    pomLength = $('#workSlider').val();
+    console.log(pomLength);
+    updateTimeParagraph();
+  });
+
+
+
+
+
+
 
   $("#runPom").click(function(){
     if($(this).hasClass("fa-play")){

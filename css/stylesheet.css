@@ -71,23 +71,25 @@ body{
 label{
   width: 100vw;
 }
-#pomNumSlider{
 
-  margin-left: 5%;
-  width: 71%;
-  position: relative;
-  display: inline-block;
-  vertical-align:middle;
+.numSlider{
+
+  margin-left: 5% !important;
+  width: 71% !important;
+  position: relative !important;
+  display: inline-block !important;
+  vertical-align:middle !important;
+}
+
+.quantity{
+  margin-bottom: 10px !important;
+  display: inline-block !important;
+  width: 17% !important;
 }
 
 #input{
   text-align: center;
 }
 #settings{
-}
-
-#pomQuantity{
-  margin-bottom: 10px;
-  display: inline-block;
-  width: 17%;
+  display:none;
 }
