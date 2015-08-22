@@ -3,6 +3,7 @@ $(document).ready(function(){
   var endPom;
   var endBreak;
   var totalPoms= 0;
+  var goalPoms =1;
   var pomLength = 25;
   var breakLength = 5;
   var pomRunning = false;
@@ -98,17 +99,28 @@ $(document).ready(function(){
       return d;
   }
 
+  function updateTimeParagraph(){
+    $("#workTime").html("Consider your next <b>" + Math.floor(((pomLength+breakLength)*goalPoms + (Math.floor(goalPoms/4) * 15))/60) + " hours</b> and <b>" + ((pomLength+breakLength)*goalPoms + (Math.floor(goalPoms/4) * 15)) % 60 + " minutes</b> reserved for accomplishing your goals!");
+  }
+
+  updateTimeParagraph();
+
+
   $("#clock").click(function(){
     $('#startModal').modal();
   });
 
   $('#pomNumSlider').on('input', function(){
     $('#pomQuantity').val($('#pomNumSlider').val());
-});
+    goalPoms = $('#pomNumSlider').val();
+    updateTimeParagraph();
+  });
 
-$('#pomQuantity').on('input', function(){
-  $('#pomNumSlider').val($('#pomQuantity').val());
-});
+  $('#pomQuantity').on('input', function(){
+    $('#pomNumSlider').val($('#pomQuantity').val());
+    goalPoms = $('#pomQuantity').val();
+    updateTimeParagraph();
+  });
 
 
   $("#runPom").click(function(){
