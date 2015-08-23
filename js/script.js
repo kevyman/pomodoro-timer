@@ -100,7 +100,34 @@ $(document).ready(function(){
   }
 
   function updateTimeParagraph(){
-    $("#workTime").html("Consider your next <b>" + Math.floor(((pomLength+breakLength)*goalPoms + (Math.floor(goalPoms/4) * 15))/60) + " hours</b> and <b>" + ((pomLength+breakLength)*goalPoms + (Math.floor(goalPoms/4) * 15)) % 60 + " minutes</b> reserved for accomplishing your goals!");
+    var longBreak = breakLength*3;
+    var isAnd = "";
+    var hourAmmount = Math.floor(((pomLength+breakLength)*goalPoms + (Math.floor(goalPoms/4) * longBreak))/60);
+    var minuteAmmount =  ((pomLength+breakLength)*goalPoms + (Math.floor(goalPoms/4) * longBreak)) % 60;
+    var hourString = "";
+    var minuteString = "";
+
+    if(hourAmmount && minuteAmmount){
+      isAnd = "and";
+    }
+    if(hourAmmount === 1 && isAnd === ""){
+      hourString = " <b>hour</b> "
+    }
+    else if(hourAmmount === 1){
+      hourString = " <b>" + hourAmmount + " hour</b> "
+    }
+    else if(hourAmmount>1){
+      hourString = " <b>" + hourAmmount + " hours</b> "
+    }
+
+    if(minuteAmmount === 1){
+      minuteString = " <b>" + minuteAmmount + " minute</b> "
+    }
+    else if(minuteAmmount>1){
+      minuteString = " <b>" + minuteAmmount + " minutes</b> "
+    }
+
+    $("#workTime").html("Reserve the next"+ hourString + isAnd + minuteString +"for accomplishing your goals!");
   }
 
   updateTimeParagraph();
@@ -124,19 +151,38 @@ $(document).ready(function(){
 
   $("#settingsBtn").click(function(){
     $("#settings").toggle();
+    $("#goalDiv").toggle();
+    if ($("#modalTitle").html() === "How many Pomodoros are you going to do?"){
+      $("#modalTitle").html("In each cycle, how long do you want to...");
+    }
+    else{
+      $("#modalTitle").html("How many Pomodoros are you going to do?");
+    }
+
   });
 
   $('#workLength').on('input', function(){
     $('#workSlider').val($('#workLength').val());
-    pomLength = $('#workLength').val();
-    console.log(pomLength);
+    pomLength = parseInt($('#workLength').val(), 10);
+
     updateTimeParagraph();
   });
 
   $('#workSlider').on('input', function(){
     $('#workLength').val($('#workSlider').val());
-    pomLength = $('#workSlider').val();
-    console.log(pomLength);
+    pomLength = parseInt($('#workSlider').val(), 10);
+    updateTimeParagraph();
+  });
+
+  $('#playLength').on('input', function(){
+    $('#playSlider').val($('#playLength').val());
+    breakLength =  parseInt($('#playLength').val(), 10);
+    updateTimeParagraph();
+  });
+
+  $('#playSlider').on('input', function(){
+    $('#playLength').val($('#playSlider').val());
+    breakLength = parseInt($('#playSlider').val(), 10);
     updateTimeParagraph();
   });
 
