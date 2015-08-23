@@ -141,18 +141,19 @@ $(document).ready(function(){
         swal({
           title: "You're not finished yet!",
           type: "warning",
-          text: "You are still " + (goalPoms-totalPoms) + " pomodoros short of your goal of " + goalPoms + " pomodoros! Think you could stand " + (goalPoms-totalPoms)*pomLength + " more minutes of work?",
+          text: "You are still <b>" + (goalPoms-totalPoms) + " pomodoros</b> short of your goal of <b>" + goalPoms + " pomodoros</b>! Think you could stand <b>" + (goalPoms-totalPoms)*pomLength + " more minutes</b> of work?",
           html: true,
           showCancelButton: true,
-          confirmButtonText: "Yes",
-          cancelButtonText: "No",
+          confirmButtonText: "Yes, back to work!",
+          cancelButtonText: "No, I'll stop now.",
           closeOnCancel: false
         },
         function(isConfirm){
           if(!isConfirm){
+            document.getElementById("failure").play();
             sweetAlert({
               title: "You fell short.",
-              text: "You didn't do the " + goalPoms + " pomodoros you planned on doing. Sometimes life gets in the way, we get it! Better luck next time!",
+              text: "You didn't do the <b>" + goalPoms + " pomodoros</b> you planned on doing. Sometimes life gets in the way, we get it! Better luck next time!",
               html: true,
               type: "error"
             });
@@ -169,18 +170,19 @@ $(document).ready(function(){
         swal({
           title: "Are you sure you want to quit?",
           type: "warning",
-          text: "You have reached your goal of " + goalPoms + " pomodoros, but are you really sure you want off this productivity train?",
+          text: "You have surpassed your goal of <b>" + goalPoms + " pomodoros</b>, but are you really sure you want off this productivity train?",
           html: true,
           showCancelButton: true,
-          confirmButtonText: "Yes",
-          cancelButtonText: "No",
+          confirmButtonText: "Yes, I'll stop here.",
+          cancelButtonText: "No, back to work!",
           closeOnConfirm: false
         },
         function(isConfirm){
           if(isConfirm){
+            document.getElementById("success").play();
             sweetAlert({
               title: "Great job!",
-              text: "You did " + totalPoms + " pomodoros, for a total of " + totalPoms*pomLength + " minutes of work! You're awesome!",
+              text: "You did <b>" + totalPoms + " pomodoros</b>, for a total of <b>" + totalPoms*pomLength + " minutes</b> of work! You're awesome!",
               html: true,
               type: "success"
             });
