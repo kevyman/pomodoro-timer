@@ -134,7 +134,77 @@ $(document).ready(function(){
 
 
   $("#clock").click(function(){
-    $('#startModal').modal();
+
+    if(pomRunning || breakRunning){
+
+      if(totalPoms<goalPoms){
+        swal({
+          title: "You're not finished yet!",
+          type: "warning",
+          text: "You are still " + (goalPoms-totalPoms) + " pomodoros short of your goal of " + goalPoms + " pomodoros! Think you could stand " + (goalPoms-totalPoms)*pomLength + " more minutes of work?",
+          html: true,
+          showCancelButton: true,
+          confirmButtonText: "Yes",
+          cancelButtonText: "No",
+          closeOnCancel: false
+        },
+        function(isConfirm){
+          if(!isConfirm){
+            sweetAlert({
+              title: "You fell short.",
+              text: "You didn't do the " + goalPoms + " pomodoros you planned on doing. Sometimes life gets in the way, we get it! Better luck next time!",
+              html: true,
+              type: "error"
+            });
+            totalPoms = 0;
+            pomRunning = false;
+            breakRunning = false;
+            document.getElementById("pomArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
+            document.getElementById("breakArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
+          }
+        });
+      }
+
+      else{
+        swal({
+          title: "Are you sure you want to quit?",
+          type: "warning",
+          text: "You have reached your goal of " + goalPoms + " pomodoros, but are you really sure you want off this productivity train?",
+          html: true,
+          showCancelButton: true,
+          confirmButtonText: "Yes",
+          cancelButtonText: "No",
+          closeOnConfirm: false
+        },
+        function(isConfirm){
+          if(isConfirm){
+            sweetAlert({
+              title: "Great job!",
+              text: "You did " + totalPoms + " pomodoros, for a total of " + totalPoms*pomLength + " minutes of work! You're awesome!",
+              html: true,
+              type: "success"
+            });
+            totalPoms = 0;
+            pomRunning = false;
+            breakRunning = false;
+            document.getElementById("pomArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
+            document.getElementById("breakArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
+          }
+        });
+      }
+
+    }
+    else{
+      $('#startModal').modal();
+    }
+  });
+
+  $("#startPom").click(function(){
+    curTime = new Date();
+    endPom = 6*curTime.getMinutes() + curTime.getSeconds()/10 + 6*pomLength;
+    endBreak = endPom + 6 * breakLength;
+    pomRunning = true;
+
   });
 
   $('#pomNumSlider').on('input', function(){

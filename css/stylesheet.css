@@ -2,6 +2,11 @@ body{
 
 }
 
+#isRunning{
+  position:relative;
+  padding-left: 50%;
+}
+
 #face{
    stroke-width: 1px;
    stroke: #000;
@@ -22,6 +27,10 @@ body{
   stroke: #446688;
 }
 
+#clockBox{
+  max-height: 100vh;
+}
+
 #breakArc{
   stroke: green;
 }
@@ -31,9 +40,9 @@ body{
 }
 
 #clock{
-  /*display: block;
-  margin: auto;
-  height: 90vh;*/
+  position: absolute;
+  max-height: 100vh;
+
 }
 
 /* centered columns styles */

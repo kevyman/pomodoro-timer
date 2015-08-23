@@ -14,22 +14,27 @@
       <div class= "container-fluid">
 
         <div class="row">
-          <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4">
+          <div id="clockBox" class="col-xs-12">
 
             <svg id="clock" viewBox="0 0 100 100">
+
               <circle id="face" cx="50" cy="50" r="45"/>
               <g id="hands">
                 <rect id="hour" x="47.5" y="22" width="5" height="30" rx="2.5" ry="2.55" />
                 <rect id="min" x="48.5" y="12" width="3" height="40" rx="2" ry="2"/>
                 <line id="sec" x1="50" y1="52" x2="50" y2="10" />
               </g>
+
               <path id="pomArc" />
               <path id="breakArc" />
+              <!-- <i id="isRunning" class="btn fa fa-play fa-4x hvr-bounce-in"></i> -->
             </svg>
+
+
 
           </div>
         </div>
-
+<!--
         <div class="row row-centered ">
           <div class="col-xs-10 col-xs-offset-1 col-md-4 col-md-offset-4 col-centered">
             <div class="col-xs-2 col-centered">
@@ -48,7 +53,7 @@
               <p>Break</p>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div id="startModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -88,7 +93,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" id="settingsBtn" class="btn btn-info fa fa-gear hvr-bounce-in" style="float:left;"> Settings</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Let's do this!</button>
+                <button type="button" id="startPom" class="btn btn-primary" data-dismiss="modal">Let's do this!</button>
               </div>
             </div>
 
