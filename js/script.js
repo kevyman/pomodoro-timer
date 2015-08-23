@@ -134,6 +134,8 @@ $(document).ready(function(){
 
 
   $("#clock").click(function(){
+    
+    document.getElementById("chromeMobile").play();
 
     if(pomRunning || breakRunning){
 
