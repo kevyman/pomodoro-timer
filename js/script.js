@@ -165,7 +165,7 @@ $(document).ready(function(){
       minuteString = " <b>" + minuteAmmount + " minutes</b> "
     }
 
-    $("#workTime").html("Reserve the next"+ hourString + isAnd + minuteString +"for accomplishing your goals!");
+    $("#workTime").html("Reserve the next"+ hourString + isAnd + minuteString +"for excellence!");
   }
 
   updateTimeParagraph();
@@ -174,6 +174,8 @@ $(document).ready(function(){
   $("#clock").click(function(){
 
     document.getElementById("chromeMobile").play();
+
+    $("#clock").removeClass();
 
     if(pomRunning || breakRunning){
 
@@ -193,7 +195,7 @@ $(document).ready(function(){
             document.getElementById("failure").play();
             sweetAlert({
               title: "You didn't make it.",
-              text: "You didn't do the <b>" + goalPoms + " pomodoros</b> you planned on doing. Sometimes life gets in the way, we get it! Better luck next time!",
+              text: "You couldn't complete the <b>" + goalPoms + " pomodoros</b> you planned on doing. Sometimes life gets in the way, we get it! See you back here later!",
               html: true,
               type: "error"
             });
@@ -209,13 +211,13 @@ $(document).ready(function(){
 
       else{
         swal({
-          title: "Are you sure you want to quit?",
+          title: "Stop the productivity train?",
           type: "warning",
-          text: "You have surpassed your goal of <b>" + goalPoms + " pomodoros</b>, but are you really sure you want off this productivity train?",
+          text: "Hey, you've reached your goal of <b>" + goalPoms + " pomodoros</b>! You've built up some good momentum, sure you want to stop?",
           html: true,
           showCancelButton: true,
-          confirmButtonText: "Yes, I'll stop here.",
-          cancelButtonText: "No, back to work!",
+          confirmButtonText: "Stop.",
+          cancelButtonText: "Continue!",
           closeOnConfirm: false
         },
         function(isConfirm){
@@ -223,7 +225,7 @@ $(document).ready(function(){
             document.getElementById("success").play();
             sweetAlert({
               title: "Great job!",
-              text: "You did <b>" + totalPoms + " pomodoros</b>, for a total of <b>" + totalPoms*pomLength + " minutes</b> of work! You're awesome!",
+              text: "You did <b>" + totalPoms + " pomodoros</b>, for a total of <b>" + totalPoms*pomLength + " minutes</b> of work! You are awesome!",
               html: true,
               type: "success"
             });
@@ -243,7 +245,7 @@ $(document).ready(function(){
     }
   });
 
-  $("#startPom").click(function(){
+  $("#startModal").on('hidden.bs.modal', function(){
     curTime = new Date();
     endPom = (6*curTime.getMinutes() + curTime.getSeconds()/10 + 6*pomLength);
     endBreak = (endPom + 6 * breakLength);
@@ -258,6 +260,7 @@ $(document).ready(function(){
   $('#pomNumSlider').on('input', function(){
     $('#pomQuantity').val($('#pomNumSlider').val());
     goalPoms = $('#pomNumSlider').val();
+
     updateTimeParagraph();
   });
 
@@ -271,7 +274,7 @@ $(document).ready(function(){
     $("#settings").toggle();
     $("#goalDiv").toggle();
     if ($("#modalTitle").html() === "Set your goal!"){
-      $("#modalTitle").html("In each cycle, how long do you want to...");
+      $("#modalTitle").html("How long?");
     }
     else{
       $("#modalTitle").html("Set your goal!");
@@ -283,87 +286,105 @@ $(document).ready(function(){
     $('#workSlider').val($('#workLength').val());
     pomLength = parseInt($('#workLength').val(), 10);
 
+    if (pomLength+breakLength>60) {
+      breakLength= 60-pomLength;
+      $('#playLength').val(breakLength);
+      $('#playSlider').val(breakLength);
+    }
     updateTimeParagraph();
   });
 
   $('#workSlider').on('input', function(){
     $('#workLength').val($('#workSlider').val());
     pomLength = parseInt($('#workSlider').val(), 10);
+    if (pomLength+breakLength>60) {
+      breakLength= 60-pomLength;
+      $('#playLength').val(breakLength);
+      $('#playSlider').val(breakLength);
+    }
     updateTimeParagraph();
   });
 
   $('#playLength').on('input', function(){
     $('#playSlider').val($('#playLength').val());
     breakLength =  parseInt($('#playLength').val(), 10);
+    if (pomLength+breakLength>60) {
+      pomLength= 60-breakLength;
+      $('#workLength').val(pomLength);
+      $('#workSlider').val(pomLength);
+    }
     updateTimeParagraph();
   });
 
   $('#playSlider').on('input', function(){
     $('#playLength').val($('#playSlider').val());
     breakLength = parseInt($('#playSlider').val(), 10);
+    if (pomLength+breakLength>60) {
+      pomLength= 60-breakLength;
+      $('#workLength').val(pomLength);
+      $('#workSlider').val(pomLength);
+    }
     updateTimeParagraph();
   });
 
 
 
-
-
-
-
-  $("#runPom").click(function(){
-    if($(this).hasClass("fa-play")){
-
-      curTime = new Date();
-      endPom = 6*curTime.getMinutes() + curTime.getSeconds()/10 + 6*pomLength;
-      endBreak = endPom + 6 * breakLength;
-      pomRunning = true;
-
-    }
-    else{
-      pomRunning = false;
-      breakRunning = false;
-      document.getElementById("pomArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
-      document.getElementById("breakArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
-    }
-    $(this).toggleClass("fa-play").toggleClass("fa-stop");
-  });
-
-  $("#pomPlus").click(function(){
-    if(pomLength>=1 && pomLength < 59){
-      pomLength++;
-      $("#pomLen").html(pomLength);
-      if(pomLength+breakLength>60){
-        breakLength--;
-        $("#breakLen").html(breakLength);
-      }
-    }
-
-  });
-  $("#pomMinus").click(function(){
-    if(pomLength>1 && pomLength <= 59){
-      pomLength--;
-      $("#pomLen").html(pomLength);
-    }
-  });
-  $("#breakPlus").click(function(){
-    if(breakLength>=1 && breakLength < 59){
-      breakLength++;
-      $("#breakLen").html(breakLength);
-      if(pomLength+breakLength>60){
-        pomLength--;
-        $("#pomLen").html(pomLength);
-      }
-    }
-  });
-
-  $("#breakMinus").click(function(){
-    if(breakLength>1 && breakLength <= 59){
-      breakLength--;
-      $("#breakLen").html(breakLength);
-    }
-  });
-
-
+  //
+  //
+  // $("#runPom").click(function(){
+  //   if($(this).hasClass("fa-play")){
+  //
+  //     curTime = new Date();
+  //     endPom = 6*curTime.getMinutes() + curTime.getSeconds()/10 + 6*pomLength;
+  //     endBreak = endPom + 6 * breakLength;
+  //     pomRunning = true;
+  //
+  //   }
+  //   else{
+  //     pomRunning = false;
+  //     breakRunning = false;
+  //     document.getElementById("pomArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
+  //     document.getElementById("breakArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
+  //   }
+  //   $(this).toggleClass("fa-play").toggleClass("fa-stop");
+  // });
+  //
+  // $("#pomPlus").click(function(){
+  //   if(pomLength>=1 && pomLength < 59){
+  //     pomLength++;
+  //     $("#pomLen").html(pomLength);
+  //     if(pomLength+breakLength>60){
+  //       breakLength--;
+  //       $("#breakLen").html(breakLength);
+  //     }
+  //   }
+  //
+  // });
+  // $("#pomMinus").click(function(){
+  //   if(pomLength>1 && pomLength <= 59){
+  //     pomLength--;
+  //     $("#pomLen").html(pomLength);
+  //   }
+  // });
+  // $("#breakPlus").click(function(){
+  //   if(breakLength>=1 && breakLength < 59){
+  //     breakLength++;
+  //     $("#breakLen").html(breakLength);
+  //     if(pomLength+breakLength>60){
+  //       pomLength--;
+  //       $("#pomLen").html(pomLength);
+  //     }
+  //   }
+  // });
+  //
+  // $("#breakMinus").click(function(){
+  //   if(breakLength>1 && breakLength <= 59){
+  //     breakLength--;
+  //     $("#breakLen").html(breakLength);
+  //   }
+  // });
+  //
+  //
 
 
 });
