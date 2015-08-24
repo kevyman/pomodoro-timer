@@ -87,6 +87,15 @@ $(document).ready(function(){
 
       document.getElementById("progressArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
 
+      if((totalPoms+1)%4===0){
+        breakLength *= 3;
+      }
+      else if(totalPoms % 4 === 0){
+        breakLength /= 3;
+      }
+
+
+
       swal({
         title: "Break's over!",
         text: "Hope that break left you feeling refreshed! Now it's time to get back to accomplishing your goals. Ready for<b> " + pomLength + " more minutes</b> of work?",
@@ -99,6 +108,7 @@ $(document).ready(function(){
         endPom = 6*popTime.getMinutes() + popTime.getSeconds()/10 + 6*pomLength;
         endBreak = endPom + 6 * breakLength;
         pomBeginAngle = 6*popTime.getMinutes() + popTime.getSeconds()/10;
+
       });
     }
   }, 1000)
@@ -169,20 +179,20 @@ $(document).ready(function(){
 
       if(totalPoms<goalPoms){
         swal({
-          title: "You're not finished yet!",
+          title: "Not so fast!",
           type: "warning",
-          text: "You are still <b>" + (goalPoms-totalPoms) + " pomodoros</b> short of your goal of <b>" + goalPoms + " pomodoros</b>! Think you could stand <b>" + (goalPoms-totalPoms)*pomLength + " more minutes</b> of work?",
+          text: "You are still <b>" + (goalPoms-totalPoms) + " pomodoros</b> short of your goal of <b>" + goalPoms + " pomodoros</b>! <br><br>Come on, you can do <b>" + (goalPoms-totalPoms)*pomLength + " more minutes</b> of work!",
           html: true,
           showCancelButton: true,
-          confirmButtonText: "Yes, back to work!",
-          cancelButtonText: "No, I'll stop now.",
+          confirmButtonText: "Continue!",
+          cancelButtonText: "Stop.",
           closeOnCancel: false
         },
         function(isConfirm){
           if(!isConfirm){
             document.getElementById("failure").play();
             sweetAlert({
-              title: "You fell short.",
+              title: "You didn't make it.",
               text: "You didn't do the <b>" + goalPoms + " pomodoros</b> you planned on doing. Sometimes life gets in the way, we get it! Better luck next time!",
               html: true,
               type: "error"
