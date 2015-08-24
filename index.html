@@ -15,19 +15,36 @@
 
         <div class="row">
           <div id="clockBox" class="col-xs-12">
+            <!-- class="hvr-bounce-in" -->
 
-            <svg id="clock" viewBox="0 0 100 100">
+            <svg id="clock"  viewBox="0 0 100 100">
 
-              <circle id="face" cx="50" cy="50" r="45"/>
+              <filter id="drop-shadow">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="1.5"/>
+                <feOffset dx="2" dy="2" result="offsetblur"/>
+                <feFlood flood-color="rgba(0,0,0,0.5)"/>
+                <feComposite in2="offsetblur" operator="in"/>
+                <feMerge>
+                  <feMergeNode/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+
+              <circle id="face"  cx="50" cy="50" r="40"/>
               <g id="hands">
-                <rect id="hour" x="47.5" y="22" width="5" height="30" rx="2.5" ry="2.55" />
-                <rect id="min" x="48.5" y="12" width="3" height="40" rx="2" ry="2"/>
-                <line id="sec" x1="50" y1="52" x2="50" y2="10" />
+                <!-- <rect id="hour" x="47.5" y="22" width="5" height="30" rx="2.5" ry="2.55" />
+                <rect id="min" x="48.5" y="12" width="3" height="40" rx="2" ry="2"/> -->
+                <polygon id="hour" points="50,25 53,50 47,50"/>
+                <polygon id="min" points="50,10 53,50 47,50"/>
+                <!-- <line id="sec" x1="50" y1="52" x2="50" y2="10" /> -->
               </g>
+              <circle id="handCircle" cx="50" cy="50" r="3"/>
 
+              <path id="progressArc" />
               <path id="pomArc" />
               <path id="breakArc" />
               <!-- <i id="isRunning" class="btn fa fa-play fa-4x hvr-bounce-in"></i> -->
+
             </svg>
 
 
@@ -62,18 +79,18 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="modalTitle">How many Pomodoros are you going to do?</h4>
+                <h4 class="modal-title" id="modalTitle">Set your goal!</h4>
               </div>
               <div class="modal-body">
 
                 <form id="input" autocomplete="off">
                   <div class="form-group">
                     <div id="goalDiv">
-
-                    <input type="number" class="form-control quantity" id="pomQuantity" min="1" max="16" value=1>
-                    <input class="numSlider" type=range min=1 max=16 value=1 id="pomNumSlider" step=1>
-                    <p id="workTime"></p>
-                  </div>
+                      <label for="pomQuantity">How many pomodoros will you do?</label>
+                      <input type="number" class="form-control quantity" id="pomQuantity" min="1" max="16" value=1>
+                      <input class="numSlider" type=range min=1 max=16 value=1 id="pomNumSlider" step=1>
+                      <p id="workTime"></p>
+                    </div>
 
                     <div id="settings">
 

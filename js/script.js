@@ -1,9 +1,11 @@
 $(document).ready(function(){
   var curTime;
-  var endPom;
-  var endBreak;
+  var endPom = 0;
+  var endBreak = 0;
   var totalPoms= 0;
   var goalPoms =1;
+  var pomBeginAngle =0;
+  var breakBeginAngle = 0;
   var pomLength = 25;
   var breakLength = 5;
   var pomRunning = false;
@@ -11,28 +13,45 @@ $(document).ready(function(){
 
   setInterval(function() {
 
+
     function r(el, deg) {
       el.setAttribute('transform', 'rotate('+ deg +' 50 50)');
     }
     var d = new Date();
-    r(sec, 6*d.getSeconds());
+    // r(sec, 6*d.getSeconds());
     r(min, 6*d.getMinutes() + d.getSeconds()/10);
     r(hour, 30*(d.getHours()%12) + d.getMinutes()/2);
 
+    if(d.getMinutes()===0 && d.getSeconds()===0){
+      if(endPom>=360) endPom -= 360;
+      if(endBreak>=360) endBreak -= 360;
+      // console.log("endPom:"+endPom);
+      // console.log("endBreak" + endBreak);
+    }
+
+
 
     if(pomRunning){
+      document.getElementById("progressArc")
+      .setAttribute("d", describeArc(50, 50, 44, pomBeginAngle, endPom));
       document.getElementById("pomArc")
-      .setAttribute("d", describeArc(50, 50, 43.1, 6*d.getMinutes() + d.getSeconds()/10, endPom));
+      .setAttribute("d", describeArc(50, 50, 44, 6*d.getMinutes() + d.getSeconds()/10, endPom));
       document.getElementById("breakArc")
-      .setAttribute("d", describeArc(50, 50, 43.1, endPom, endBreak));
+      .setAttribute("d", describeArc(50, 50, 44, endPom, endBreak));
+
     }
 
     if(6*d.getMinutes() + d.getSeconds()/10 === endPom && pomRunning){
+      // console.log("current angle:"+ 6*d.getMinutes() + d.getSeconds()/10);
+
 
       pomRunning = false;
+
       document.getElementById("bell").play();
 
       totalPoms++;
+
+      document.getElementById("progressArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
 
       document.getElementById("breakArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
 
@@ -45,23 +64,31 @@ $(document).ready(function(){
       },
       function(){
         breakRunning = true;
+
         var popTime = new Date();
+        breakBeginAngle = 6*popTime.getMinutes() + popTime.getSeconds()/10;
         endBreak = 6*popTime.getMinutes() + popTime.getSeconds()/10 + 6*breakLength;
       });
     }
 
     if(breakRunning){
+      document.getElementById("progressArc")
+      .setAttribute("d", describeArc(50, 50, 44, breakBeginAngle, endBreak));
       document.getElementById("breakArc")
-      .setAttribute("d", describeArc(50, 50, 43.1, 6*d.getMinutes() + d.getSeconds()/10, endBreak));
+      .setAttribute("d", describeArc(50, 50, 44, 6*d.getMinutes() + d.getSeconds()/10, endBreak));
     }
 
     if(6*d.getMinutes() + d.getSeconds()/10 === endBreak && breakRunning){
+      // console.log("current angle:"+ 6*d.getMinutes() + d.getSeconds()/10);
 
       breakRunning = false;
+
       document.getElementById("bell").play();
 
+      document.getElementById("progressArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
+
       swal({
-        title: "Back to work!",
+        title: "Break's over!",
         text: "Hope that break left you feeling refreshed! Now it's time to get back to accomplishing your goals. Ready for<b> " + pomLength + " more minutes</b> of work?",
         html: true,
         confirmButtonText: "Let me at it!"
@@ -71,6 +98,7 @@ $(document).ready(function(){
         var popTime = new Date();
         endPom = 6*popTime.getMinutes() + popTime.getSeconds()/10 + 6*pomLength;
         endBreak = endPom + 6 * breakLength;
+        pomBeginAngle = 6*popTime.getMinutes() + popTime.getSeconds()/10;
       });
     }
   }, 1000)
@@ -134,7 +162,7 @@ $(document).ready(function(){
 
 
   $("#clock").click(function(){
-    
+
     document.getElementById("chromeMobile").play();
 
     if(pomRunning || breakRunning){
@@ -162,6 +190,7 @@ $(document).ready(function(){
             totalPoms = 0;
             pomRunning = false;
             breakRunning = false;
+            document.getElementById("progressArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
             document.getElementById("pomArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
             document.getElementById("breakArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
           }
@@ -191,6 +220,7 @@ $(document).ready(function(){
             totalPoms = 0;
             pomRunning = false;
             breakRunning = false;
+            document.getElementById("progressArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
             document.getElementById("pomArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
             document.getElementById("breakArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
           }
@@ -205,9 +235,13 @@ $(document).ready(function(){
 
   $("#startPom").click(function(){
     curTime = new Date();
-    endPom = 6*curTime.getMinutes() + curTime.getSeconds()/10 + 6*pomLength;
-    endBreak = endPom + 6 * breakLength;
+    endPom = (6*curTime.getMinutes() + curTime.getSeconds()/10 + 6*pomLength);
+    endBreak = (endPom + 6 * breakLength);
     pomRunning = true;
+    pomBeginAngle = 6*curTime.getMinutes() + curTime.getSeconds()/10;
+    // console.log("start angle:"+ 6*curTime.getMinutes() + curTime.getSeconds()/10);
+    // console.log("endPom:"+endPom);
+    // console.log("endBreak" + endBreak);
 
   });
 
@@ -226,11 +260,11 @@ $(document).ready(function(){
   $("#settingsBtn").click(function(){
     $("#settings").toggle();
     $("#goalDiv").toggle();
-    if ($("#modalTitle").html() === "How many Pomodoros are you going to do?"){
+    if ($("#modalTitle").html() === "Set your goal!"){
       $("#modalTitle").html("In each cycle, how long do you want to...");
     }
     else{
-      $("#modalTitle").html("How many Pomodoros are you going to do?");
+      $("#modalTitle").html("Set your goal!");
     }
 
   });

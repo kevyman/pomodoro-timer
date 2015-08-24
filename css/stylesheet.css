@@ -1,5 +1,5 @@
 body{
-
+  background-color: #CAC9C5 !important;
 }
 
 #isRunning{
@@ -7,33 +7,53 @@ body{
   padding-left: 50%;
 }
 
-#face{
-   stroke-width: 1px;
-   stroke: #000;
-   fill: #eee;
- }
-#hour, #min, #sec{
-  stroke-width: 1px;
-  fill: #333;
-  stroke: #555;
-}
 
-#pomArc, #breakArc{
-  stroke-width: 5px;
-  fill: none;
+#face{
+   /*stroke-width: 1px;
+   stroke: #000;*/
+   fill: #33D275;
+   filter:url(#drop-shadow);
+ }
+
+#hands{
+  filter:url(#drop-shadow);
+}
+#hour, #min, #sec, #handCircle{
+  /*stroke-width: 1px;*/
+  fill: #FDE016;
+
+  /*stroke: #555;*/
 }
 
 #pomArc{
-  stroke: #446688;
+  stroke: #FF9F30;
 }
+
+#breakArc{
+  stroke: #178FFF;
+}
+
+#pomArc, #breakArc{
+  stroke-width: 8px;
+  fill: none;
+}
+
+#progressArc{
+  fill: none;
+  stroke: #FE5E3E;
+  stroke-width: 2px;
+}
+
+b{
+  color: #FE5E3E;
+}
+
 
 #clockBox{
   max-height: 100vh;
 }
 
-#breakArc{
-  stroke: green;
-}
+
 
 #sec{
    stroke: #f55;
@@ -42,6 +62,7 @@ body{
 #clock{
   position: absolute;
   max-height: 100vh;
+  cursor: pointer;
 
 }
 
