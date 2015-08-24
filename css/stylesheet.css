@@ -13,12 +13,10 @@ body{
    /*stroke-width: 1px;
    stroke: #000;*/
    fill: #33D275;
-   filter:url(#drop-shadow);
+
  }
 
-#hands{
-  filter:url(#drop-shadow);
-}
+
 #hour, #min, #sec, #handCircle{
   /*stroke-width: 1px;*/
   fill: #FDE016;
