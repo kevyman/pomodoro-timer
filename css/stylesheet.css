@@ -1,13 +1,26 @@
 body{
-  background-color: #262626 !important;
-  /*background-image: url("../img/escheresque_ste.png");*/
+  /*background-color: #262626 !important;*/
+  background-image: url("../img/footer_lodyas.png");
+  /*background-image: url("../img/stardust.png");*/
 }
 
-#isRunning{
-  position:relative;
-  padding-left: 50%;
+h2, h3, h4{
+  font-family: 'Righteous', cursive !important;
+}
+#instructions{
+    color:white !important;
+}
+h3{
+  color:#FF9F30 !important;
+  text-align:center;
 }
 
+a:visited{
+  color: #FE5E3E!important;
+}
+a:hover {
+    text-decoration: none !important;
+}
 
 #face{
    /*stroke-width: 1px;
@@ -15,7 +28,9 @@ body{
    fill: #33D275;
 
  }
-
+.green{
+  color:#33D275;
+}
 
 #hour, #min, #sec, #handCircle{
   /*stroke-width: 1px;*/
@@ -49,7 +64,7 @@ b{
 
 
 #clockBox{
-  max-height: 100vh;
+
 }
 
 
@@ -59,8 +74,8 @@ b{
 }
 
 #clock{
-  position: absolute;
-  max-height: 100vh;
+  /*position: relative;*/
+  max-height: 89.9vh;
   cursor: pointer;
 
 }

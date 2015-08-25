@@ -11,6 +11,8 @@ $(document).ready(function(){
   var pomRunning = false;
   var breakRunning = false;
 
+  $('[data-toggle="tooltip"]').tooltip();
+
   setInterval(function() {
 
 
@@ -165,7 +167,7 @@ $(document).ready(function(){
       minuteString = " <b>" + minuteAmmount + " minutes</b> "
     }
 
-    $("#workTime").html("Reserve the next"+ hourString + isAnd + minuteString +"for excellence!");
+    $("#workTime").html("Reserve the next"+ hourString + isAnd + minuteString +"for getting stuff done!");
   }
 
   updateTimeParagraph();
@@ -174,8 +176,6 @@ $(document).ready(function(){
   $("#clock").click(function(){
 
     document.getElementById("chromeMobile").play();
-
-    $("#clock").removeClass();
 
     if(pomRunning || breakRunning){
 
@@ -202,6 +202,7 @@ $(document).ready(function(){
             totalPoms = 0;
             pomRunning = false;
             breakRunning = false;
+            $("#instructions").html("click clock to <span class= 'green'>start</span>");
             document.getElementById("progressArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
             document.getElementById("pomArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
             document.getElementById("breakArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
@@ -213,7 +214,7 @@ $(document).ready(function(){
         swal({
           title: "Stop the productivity train?",
           type: "warning",
-          text: "Hey, you've reached your goal of <b>" + goalPoms + " pomodoros</b>! You've built up some good momentum, sure you want to stop?",
+          text: "Hey, you've reached your goal of <b>" + goalPoms + " pomodoros</b>! You've built up some good momentum, are you sure you want to stop?",
           html: true,
           showCancelButton: true,
           confirmButtonText: "Stop.",
@@ -225,13 +226,14 @@ $(document).ready(function(){
             document.getElementById("success").play();
             sweetAlert({
               title: "Great job!",
-              text: "You did <b>" + totalPoms + " pomodoros</b>, for a total of <b>" + totalPoms*pomLength + " minutes</b> of work! You are awesome!",
+              text: "In the end you did <b>" + totalPoms + " pomodoros</b>, for a total of <b>" + totalPoms*pomLength + " minutes</b> of work! You are awesome! Come back soon!",
               html: true,
               type: "success"
             });
             totalPoms = 0;
             pomRunning = false;
             breakRunning = false;
+            $("#instructions").html("click clock to <span class='green'>start</span>");
             document.getElementById("progressArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
             document.getElementById("pomArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
             document.getElementById("breakArc").setAttribute("d", describeArc(0, 0, 0, 0, 0));
@@ -241,7 +243,8 @@ $(document).ready(function(){
 
     }
     else{
-      $('#startModal').modal();
+      $("#startModal").modal();
+
     }
   });
 
@@ -251,6 +254,8 @@ $(document).ready(function(){
     endBreak = (endPom + 6 * breakLength);
     pomRunning = true;
     pomBeginAngle = 6*curTime.getMinutes() + curTime.getSeconds()/10;
+    $("#instructions").html("click clock again to <b>stop</b>");
+
     // console.log("start angle:"+ 6*curTime.getMinutes() + curTime.getSeconds()/10);
     // console.log("endPom:"+endPom);
     // console.log("endBreak" + endBreak);
@@ -273,11 +278,11 @@ $(document).ready(function(){
   $("#settingsBtn").click(function(){
     $("#settings").toggle();
     $("#goalDiv").toggle();
-    if ($("#modalTitle").html() === "Set your goal!"){
-      $("#modalTitle").html("How long?");
+    if ($("#modalTitle").html() === "Choose your goal!"){
+      $("#modalTitle").html("How many minutes?");
     }
     else{
-      $("#modalTitle").html("Set your goal!");
+      $("#modalTitle").html("Choose your goal!");
     }
 
   });

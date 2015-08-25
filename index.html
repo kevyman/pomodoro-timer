@@ -8,6 +8,7 @@
       <link href="css/bootstrap.min.css" rel="stylesheet">
       <link rel="stylesheet" href="font-awesome-4.4.0/css/font-awesome.min.css">
       <link rel="stylesheet" type="text/css" href="sweetalert-master/dist/sweetalert.css">
+      <link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
     </head>
 
     <body>
@@ -15,9 +16,10 @@
 
         <div class="row">
           <div id="clockBox" class="col-xs-12">
-            <!-- class="hvr-bounce-in" -->
+            <!-- class="hvr-bounce-in" class="hvr-pulse-grow"-->
+            <h2 class="text-center" id="instructions">click clock to <span class="green">start</span></h2>
 
-            <svg id="clock" class="hvr-pulse-grow" viewBox="0 0 100 100">
+            <svg id="clock"  viewBox="0 0 100 100">
 
               <filter id="drop-shadow">
                 <feGaussianBlur in="SourceAlpha" stdDeviation="1.5"/>
@@ -28,10 +30,11 @@
                   <feMergeNode/>
                   <feMergeNode in="SourceGraphic"/>
                 </feMerge>
+
               </filter>
 
-              <circle id="face"  style="filter:url(#drop-shadow);" cx="50" cy="50" r="40"/>
-              <g id="hands" style="filter:url(#drop-shadow);">
+              <circle id="face" style="filter:url(#drop-shadow);"  cx="50" cy="50" r="40"/>
+              <g id="hands" style="filter:url(#drop-shadow);" class="handShadow">
                 <!-- <rect id="hour" x="47.5" y="22" width="5" height="30" rx="2.5" ry="2.55" />
                 <rect id="min" x="48.5" y="12" width="3" height="40" rx="2" ry="2"/> -->
                 <polygon id="hour" points="50,25 53,50 47,50"/>
@@ -79,18 +82,17 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" style="text-align:center; color:#FF9F30;" id="modalTitle">Set your goal!</h4>
+                <h3 class="modal-title" id="modalTitle">Choose your goal!</h3>
               </div>
               <div class="modal-body">
 
                 <form id="input" autocomplete="off">
                   <div class="form-group">
                     <div id="goalDiv">
-                      <label for="pomQuantity">How many pomodoros will you do?</label>
+                      <label for="pomQuantity">How many <a href="#" data-toggle="tooltip" title='"Pomodoro" is short for a work / break cycle. Default: 25 mins work and 5 mins break. After 4 pomodoros: 15 mins break.'<b>pomodoros<i class="fa fa-question-circle"></i></b></a> will you do?</label>
                       <input type="number" class="form-control quantity" id="pomQuantity" min="1" max="16" value=1>
                       <input class="numSlider" type=range min=1 max=16 value=1 id="pomNumSlider" step=1>
                       <p id="workTime"></p>
-                      <p><b><i class="fa fa-exclamation-circle"></i> Click the clock again to stop. <i class="fa fa-exclamation-circle"></i></b></p>
                     </div>
 
                     <div id="settings">
